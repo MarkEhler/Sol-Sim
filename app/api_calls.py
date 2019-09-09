@@ -245,13 +245,13 @@ def get_temp_log_daylight(df, lat, long, dark, time):
 def get_solar_data(df, lat, long, date):
 #     data will key off times in 00:00:00 format
         # init web browser
-    try:
-        chromedriver_path = os.path.join(os.getcwd(), 'static', 'chromedriver.exe')
-    except:
-        (print('check locally for chromedriver.exe'))
-    else:
-        chromedriver_path = 'C://Users//Mark//Downloads//chromedriver_win32//chromedriver.exe'
-    driver = webdriver.Chrome(executable_path=chromedriver_path)
+    # try:
+    #     chromedriver_path = os.path.join(os.getcwd(), 'static', 'chromedriver.exe')
+    # except:
+    #     (print('check locally for chromedriver.exe'))
+    # else:
+    #     chromedriver_path = 'C://Users//Mark//Downloads//chromedriver_win32//chromedriver.exe'
+    # driver = webdriver.Chrome(executable_path=chromedriver_path)
     
         #  SPA Calculator
     SPA_calc = 'https://midcdmz.nrel.gov/solpos/spa.html'
