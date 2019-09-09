@@ -20,7 +20,7 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), c
 
 # driver.get('https://www.google.com')
 
-print(driver.page_source)
+# print(driver.page_source)
 
 # Retrieve set environment variables
 DarkSkyKey = "67ea5b58bde0e53adb5d1b0cf7c94395"
@@ -30,23 +30,24 @@ OpenCageKey = "227274f48bf449628de5ceeeacfbf6a7"
 
 # string formatting notes - user inputs hardcoded for debugging
 location = '555 S Allison Pkwy, Lakewood, CO 80226'
-time_span = 2
+time_span = '2'
+date = '06-20-2018'
 
 
 
 # Time Fx
-def get_time(user_input = None):
+def get_time(count, user_input = None):
     '''
     gets time in the right formats for our calls
     outputs are in strings
-    user_input takes a user input in mm/dd/YYYY format
+    user_input takes a user input in mm-dd-YYYY format
     
     '''
     if user_input:
-        
-        units = user_input.split('/')
-        myorder = [2, 0, 1]
-        units = [units[i] for i in myorder]
+        units = user_input.split('-')
+        if count == 0:
+            myorder = [2, 0, 1]
+            units = [units[i] for i in myorder]
         units.append('06')
         units.append('00')
         units = [int(unit) for unit in units]
@@ -244,9 +245,12 @@ def get_temp_log_daylight(df, lat, long, dark, time):
 def get_solar_data(df, lat, long, date):
 #     data will key off times in 00:00:00 format
         # init web browser
-    os.environ.get('')
-    chromedriver_path = os.path.join(os.getcwd(), 'static', 'chromedriver.exe')
-    # print(chromedriver_path)
+    try:
+        chromedriver_path = os.path.join(os.getcwd(), 'static', 'chromedriver.exe')
+    except:
+        (print('check locally for chromedriver.exe'))
+    else:
+        chromedriver_path = 'C://Users//Mark//Downloads//chromedriver_win32//chromedriver.exe'
     driver = webdriver.Chrome(executable_path=chromedriver_path)
     
         #  SPA Calculator
@@ -359,11 +363,12 @@ def loop_data_collect(time_span, location, target_date = None):
     '''
   
     output = pd.DataFrame()
+    time_span = int(time_span)
 
-    
+    count = 0
     for i in range(time_span):
         if target_date:
-            time_list = get_time(target_date)
+            time_list = get_time(count, target_date)
         else:
             time_list = get_time()
 
@@ -386,6 +391,7 @@ def loop_data_collect(time_span, location, target_date = None):
         cleaning_results = None
         cleaned_results = None
         print('♥‿♥')
+        count += 1
     return output, sunrise, sunset
 
 #pass and send error in case of a future date
